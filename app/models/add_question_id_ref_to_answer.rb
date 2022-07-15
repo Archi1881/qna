@@ -1,0 +1,2 @@
+class AddQuestionIdRefToAnswer < ApplicationRecord
+end

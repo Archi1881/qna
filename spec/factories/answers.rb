@@ -3,7 +3,7 @@ FactoryBot.define do
     body { "MyText" }
 
     trait :invalid do
-      title { nil }
+      body { nil }
     end
   end
 end

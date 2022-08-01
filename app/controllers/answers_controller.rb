@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
-  before_action :load_question, only: %i[new create]\
+  before_action :load_question, only: %i[new create]
   before_action :find_answer, only: %i[destroy]
 
   def create

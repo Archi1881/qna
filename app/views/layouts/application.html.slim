@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    meta charset='utf-8'
+    meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'
+
+    title qna
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_tag 'application', 'data-turbolinks-track': 'reload'
+
+  body
+    div
+      - if user_signed_in?
+        = link_to 'Logout', destroy_user_session_path, method: :delete
+      else
+        = link_to 'Login', new_user_session_path
+
+    = render 'shared/flash'
+
+    = yield

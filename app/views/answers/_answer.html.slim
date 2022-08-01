@@ -1,0 +1,16 @@
+p = answer.body
+- if current_user&.author?(answer)
+  = link_to 'Delete answer', answer_path(answer),
+                             method: :delete,
+                             data: { confirm: 'Are you sure?' }
+
+- if user_signed_in?
+  b = 'Add Answer'
+
+  = form_with model: answer, local: true do |f|
+
+    = f.label :body
+    = f.text_area :body
+
+    br
+    = f.submit 'Add answer'

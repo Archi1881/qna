@@ -1,16 +1,24 @@
-p = answer.body
-- if current_user&.author?(answer)
-  = link_to 'Delete answer', answer_path(answer),
-                             method: :delete,
-                             data: { confirm: 'Are you sure?' }
+li class="answer-#{answer.id}"
+  = answer.body
 
-- if user_signed_in?
-  b = 'Add Answer'
+  - if current_user&.author?(answer.question) && !answer.best?
+    = button_to 'Best answer', best_answer_path(answer),
+                               method: :patch, remote: true
 
-  = form_with model: answer, local: true do |f|
+  - if current_user&.author?(answer)
+    '
+    = link_to 'Edit', '#', class: 'edit-answer-link',
+                      data: { answer_id: answer.id }
+    '  |
+    = link_to 'Delete', answer_path(answer),
+                        method: :delete,
+                        remote: true,
+                        data: { confirm: 'Are you sure?', answer_id: answer.id }
 
-    = f.label :body
-    = f.text_area :body
+    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
 
-    br
-    = f.submit 'Add answer'
+      = f.label :body, 'Your Answer'
+      = f.text_area :body, id: :answer_body
+
+      br
+      = f.submit 'Save'

@@ -79,4 +79,5 @@ group :test do
   gem 'shoulda-matchers'
   gem "rails-controller-testing"
   gem 'launchy'
+  gem 'sass-rails'
 end

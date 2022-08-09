@@ -3,6 +3,12 @@
 = form_with model: @question, local: true do |f|
   = f.label :title
   = f.text_field :title
+  
+  br
   = f.label :body
   = f.text_area :body
-  = f.submit 'Ask'
+
+  br
+  = f.submit 'Create'
+
+= link_to 'Back', questions_path

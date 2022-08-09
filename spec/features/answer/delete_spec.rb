@@ -11,27 +11,31 @@ feature 'Delete his answer', %q{
   given!(:answer) { create :answer, question: question, user: author }
 
 
-  scenario 'Authenticated Author tries to delete his answer' do
+  scenario 'Authenticated Author tries to delete his answer', js: true do
     sign_in author
     visit question_path(question)
 
     expect(page).to have_content answer.body
 
-    click_on 'Delete answer'
+    within '.answers' do
+      click_on 'Delete'
+    end
+
+    page.driver.browser.switch_to.alert.accept
 
     expect(page).to have_content 'Answer successfully deleted'  
   end
 
-  scenario "Authenticated User tries to delete another's answer" do
+  scenario "Authenticated User tries to delete another's answer", js: true do
     sign_in user
     visit question_path(question)
 
-    expect(page).to_not have_link 'Delete answer'
+    expect(page).to_not have_link 'Delete'
   end
 
-  scenario 'Unauthenticated user tries to delete answer' do
+  scenario 'Unauthenticated user tries to delete answer', js: true do
     visit question_path(question)
 
-    expect(page).to_not have_link 'Delete answer'
+    expect(page).to_not have_link 'Delete'
   end
 end

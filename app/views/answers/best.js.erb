@@ -1,0 +1,5 @@
+$('.answer-errors').html('');
+$('.flash').html('');
+
+$('.answers').html("<%= j render @answer.question.answers %>");
+$('.flash').html("<%= j render 'shared/flash' %>");

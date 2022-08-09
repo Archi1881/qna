@@ -1,44 +1,29 @@
 h1= @question.title
 p= @question.body
 
-- if current_user&.author?(@question)
-
-  .edit-question
-    = link_to 'Edit', '#', class: 'edit-question-link',
-                      data: { question_id: @question.id }
-    '  |
-    = link_to 'Delete', question_path(@question),
-                        method: :delete,
-                        data: { confirm: 'Are you sure?' }
-
-    = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
-      = f.label :title
-      = f.text_field :title, id: :question_title    
-
-      br
-      = f.label :body
-      = f.text_area :body, id: :question_body
-
-      br
-      = f.submit 'Save'
-
-br
-.answers
-  h3 Answers
-  = render @question.answers
-
-br
 - if user_signed_in?
   = 'Add Answer'
 
-  .answer-errors
+  = form_with model: [@question, @answer], local: true do |f|
     = render 'shared/errors', resource: @answer
 
-  = form_with model: [@question, @answer], class: 'new-answer' do |f|
     = f.label :body
     = f.text_area :body
 
     br
     = f.submit 'Add answer'
 
-= link_to 'Back', questions_path
+- if @question.answers.present?
+  h2 Answers
+  - @question.answers.each do |answer|
+    - if answer.persisted?
+      = answer.body
+      - if current_user&.author?(answer)
+        = link_to 'Delete answer', answer_path(answer),
+                                   method: :delete,
+                                   data: { confirm: 'Are you sure?' }
+
+- if current_user&.author?(@question)
+  = link_to 'Delete', question_path(@question),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' }                                    

@@ -8,18 +8,16 @@ html
     = csrf_meta_tags
     = csp_meta_tag
 
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
     div
       - if user_signed_in?
-        = current_user.email
         = link_to 'Logout', destroy_user_session_path, method: :delete
-      - else
+      else
         = link_to 'Login', new_user_session_path
 
-      .flash
-        = render 'shared/flash'
+    = render 'shared/flash'
 
-      = yield
+    = yield

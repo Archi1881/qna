@@ -1,0 +1,11 @@
+.attached-files
+  - if resource.files.attached?
+    ' Files:
+    - resource.files.each do |file|
+        p class="attachment-#{file.id}"
+          = link_to file.filename.to_s, url_for(file)
+          '
+          - if current_user&.author?(resource) 
+            = link_to 'x', attachment_path(file),
+                           method: :delete,
+                           remote: true

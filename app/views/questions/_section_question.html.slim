@@ -1,0 +1,31 @@
+h1 = @question.title
+h2 = @question.body
+
+p
+  = render partial: 'attachments/attachment', locals: { resource: @question }
+
+- if current_user&.author?(@question)
+
+  .edit-question
+    = link_to 'Edit', '#', class: 'edit-question-link',
+                      data: { question_id: @question.id }
+    '  |
+    = link_to 'Delete', question_path(@question),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' }
+
+    = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
+      p
+        = f.label :title
+        = f.text_field :title, id: :question_title
+
+      p
+        = f.label :body
+        = f.text_area :body, id: :question_body
+
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
+
+      br
+      = f.submit 'Save'

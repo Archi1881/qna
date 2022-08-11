@@ -2,6 +2,8 @@ li class="answer-#{answer.id}"
   p
     = answer.body
 
+    = render partial: 'links/list', locals: { resource: answer }
+
     = render partial: 'attachments/attachment', locals: { resource: answer }
 
     - if current_user&.author?(answer.question) && !answer.best?
@@ -21,12 +23,14 @@ li class="answer-#{answer.id}"
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
 
       p
-        = f.label :body, 'Your Answer'
+        = f.label :body, 'Your Answer:'
         = f.text_area :body, id: :answer_body
 
       p
         = f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
+
+      = render partial: 'links/add', locals: { f: f }
 
       br
       = f.submit 'Save'

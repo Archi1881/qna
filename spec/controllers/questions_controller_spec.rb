@@ -9,7 +9,6 @@ RSpec.describe QuestionsController, type: :controller do
 
     before { get :index }
 
-
     it 'populates an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
@@ -23,6 +22,10 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
     
     before { get :new }
+
+    it 'assings a new Link' do
+      expect(assigns(:question).links.first).to be_a_new(Link)
+    end
 
     it 'renders new view' do
       expect(response).to render_template :new

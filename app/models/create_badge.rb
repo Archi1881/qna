@@ -1,0 +1,2 @@
+class CreateBadge < ApplicationRecord
+end

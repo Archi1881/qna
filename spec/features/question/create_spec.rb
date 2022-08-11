@@ -16,8 +16,10 @@ feature 'User can create question', %q{
     end
 
     scenario 'asks a question' do
-      fill_in 'Title', with: 'SomeTitle'
-      fill_in 'Body', with: 'SomeBody'
+      within '.question-fields' do
+        fill_in 'Question title', with: 'SomeTitle'
+        fill_in 'Body', with: 'SomeBody'
+      end
       click_on 'Create'
 
       expect(page).to have_content 'Question successfully created'
@@ -32,14 +34,33 @@ feature 'User can create question', %q{
     end
   
     scenario 'asks a question with attached files' do
-      fill_in 'Title', with: 'SomeTitle'
-      fill_in 'Body', with: 'SomeBody'
+      within '.question-fields' do
+        fill_in 'Question title', with: 'SomeTitle'
+        fill_in 'Body', with: 'SomeBody'
+      end
       attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       
       click_on 'Create'
 
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
+    end
+
+    scenario 'asks a question with create a badge' do
+      within '.question-fields' do
+        fill_in 'Question title', with: 'SomeTitle'
+        fill_in 'Body', with: 'SomeBody'
+      end
+
+      within '.badge-fields' do
+        fill_in 'Badge title', with: 'Some Bage Title'
+        attach_file 'Image', "#{Rails.root}/public/favicon.ico"
+      end
+
+      click_on 'Create'
+
+      expect(page).to have_content 'Question successfully created'
+      expect(page).to have_content 'Some Bage Title'
     end
   end
 

@@ -1,19 +1,35 @@
 = render 'shared/errors', resource: @question
 
 = form_with model: @question, local: true do |f|
-  p
-    = f.label :title
-    = f.text_field :title
-  
-  p
-    = f.label :body
-    = f.text_area :body
+  .question-fields
+    p
+      = f.label :title, 'Question title:'
+      = f.text_field :title
+
+    p
+      = f.label :body
+      ':
+      = f.text_area :body
 
   p
     = f.label :files
+    ':
     = f.file_field :files, multiple: true
 
-  br
-  = f.submit 'Create'
+  = render partial: 'links/add', locals: { f: f }
+
+  .badge-fields
+    p Add Bage
+    = f.fields_for :badge do |badge|
+      p
+        = badge.label :name, 'Badge title:'
+        = badge.text_field :name
+      p
+        = badge.label :image
+        ':
+        = badge.file_field :image
+
+  p
+    = f.submit 'Create'
 
 = link_to 'Back', questions_path

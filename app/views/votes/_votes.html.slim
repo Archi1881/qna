@@ -1,0 +1,17 @@
+div class = "rate #{resource.class}-#{resource.id}"
+  .rating
+    h3
+      = "Rating: #{resource.rating}"
+
+  - unless current_user&.author?(resource)
+    .voting class = "#{'hidden' if current_user&.voted?(resource)}"
+      = link_to 'Positive', polymorphic_path(resource, action: :positive),
+                            method: :post, remote: true, data: { type: :json }
+      '  |
+      = link_to 'Negative', polymorphic_path(resource, action: :negative),
+                            method: :post, remote: true, data: { type: :json }
+
+    .revote
+      = link_to 'Revote', polymorphic_path(resource, action: :revote),
+          class: "revote-link #{'hidden' unless current_user&.voted?(resource)}",
+          method: :delete, remote: true, data: { type: :json }

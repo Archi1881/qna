@@ -8,7 +8,7 @@ feature 'User can add links to answer', %q{
 
   given(:author) { create :user }
   given(:question) { create :question, user: author }
-  given(:gist_link) { 'https://gist.github.com/Archi1881/62fd494dfdc60ebcf4e469c8f5c43268' }
+  given(:gist_link) { 'https://gist.github.com/Archi1881/3257223adf647af2937cd9eadafbfe56' }
 
   scenario 'User adds links when asks answer', js: true do
     sign_in author

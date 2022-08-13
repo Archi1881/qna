@@ -1,8 +1,31 @@
+.received-badges
+  - if current_user&.badges.present?
+    h2 Received badges
+    - current_user&.badges.each do |badge|
+      h3 Badge: #{badge.name}
+
+      p Question: #{badge.question.title} 
+      p
+        = image_tag badge.image, size: '100x100'
+
 h1 = @question.title
 h2 = @question.body
 
-p
-  = render partial: 'attachments/attachment', locals: { resource: @question }
+.badge
+  - if @question.badge.present? && current_user&.author?(@question)
+    h3 Badge:
+    p
+      = @question.badge.name
+    p
+      = image_tag @question.badge.image, size: '100x100'
+
+.links
+  p
+    = render partial: 'links/list', locals: { resource: @question }
+
+.files
+  p
+    = render partial: 'attachments/attachment', locals: { resource: @question }
 
 - if current_user&.author?(@question)
 
@@ -27,5 +50,7 @@ p
         = f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
 
-      br
-      = f.submit 'Save'
+      = render partial: 'links/add', locals: { f: f }
+
+      p
+        = f.submit 'Save'

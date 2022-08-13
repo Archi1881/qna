@@ -3,8 +3,9 @@
 
 br
 .answers
-  h3 Answers
-  = render @question.answers
+  - if @question.answers.present?
+    h3 Answers
+    = render @question.answers
 
 br
 - if user_signed_in?
@@ -22,7 +23,9 @@ br
       = f.label :files
       = f.file_field :files, multiple: true 
 
-    br
+    = render partial: 'links/add', locals: { f: f }
+
+    p
     = f.submit 'Add answer'
 
 = link_to 'Back', questions_path

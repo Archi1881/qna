@@ -9,6 +9,9 @@ feature 'User can edit his question', %q{
   given(:author) { create :user }
   given!(:user) { create :user }
   given!(:question) { create :question, user: author }
+  given!(:gist_link) { 'https://gist.github.com/Archi1881/62fd494dfdc60ebcf4e469c8f5c43268' }
+  given!(:link1) { create :link, name: 'Test link 1', url: gist_link, linkable: question }
+  given!(:link2) { create :link, name: 'Test link 2', url: 'https://www.google.com/', linkable: question }
 
   scenario 'Unauthenticated user can not edit question' do
     visit question_path(question)
@@ -56,6 +59,25 @@ feature 'User can edit his question', %q{
       expect(page).to have_content 'SomeBody'
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
+    end
+
+    scenario 'add links when editing the question' do
+      click_on 'Edit'
+
+      within '.edit-question' do
+        click_on 'Add link'
+
+        new_link = all('.nested-fields').last
+
+        within(new_link) do
+          fill_in 'Link name', with: 'Test link 3'
+          fill_in 'Url', with: 'https://github.com/'
+        end
+
+        click_on 'Save'
+      end
+
+      expect(page).to have_link 'Test link 3', href: 'https://github.com/'
     end
   end
 

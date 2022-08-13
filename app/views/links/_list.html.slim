@@ -1,0 +1,18 @@
+- if resource.links.exists?
+  p Links:
+  ul
+    - resource.links.each do |link|
+      li class="link-#{link.id}"
+        = link_to link.name, link.url, target: :blank
+        '
+        - if current_user&.author?(resource) 
+          = link_to 'x', link_path(link),
+                         method: :delete,
+                         remote: true
+        - if link.gist?
+          p
+            - link.gist_content.each do |filename, content|
+              h3
+                = filename
+              p
+                = content.truncate(250)

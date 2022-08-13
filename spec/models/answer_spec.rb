@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
+  it_behaves_like 'linkable'
+
   describe 'associations' do
     it { should belong_to :question }
     it { should validate_inclusion_of(:best).in_array([true, false]) }

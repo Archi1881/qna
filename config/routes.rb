@@ -5,8 +5,15 @@ Rails.application.routes.draw do
   resources :attachments, only: %i[destroy]
   resources :links, only: %i[destroy]
 
-  resources :questions do
-    resources :answers, shallow: true do
+  concern :votable do
+    member do
+      post :positive, :negative
+      delete :revote
+    end
+  end
+
+  resources :questions, concerns: :votable do
+    resources :answers, concerns: :votable, shallow: true do
       patch :best, on: :member
     end
   end

@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { should have_many(:questions).dependent(:destroy) }
   it { should have_many(:answers).dependent(:destroy) }
+  it { should have_many(:badges).dependent(:destroy) }
+  it { should have_many(:votes).dependent(:destroy) }
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
@@ -32,4 +34,19 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'User positive voted' do
+    before { question.positive(user) }
+
+    it 'for the question' do
+      expect(user).to be_voted(question)
+    end
+  end
+
+  describe 'User negative voted' do
+    before { question.negative(user) }
+
+    it 'for the question' do
+      expect(user).to be_voted(question)
+    end
+  end
 end

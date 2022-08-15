@@ -1,5 +1,5 @@
-.received-badges
-  - if current_user&.badges.present?
+- if current_user&.badges.present?
+  .received-badges  
     h2 Received badges
     - current_user&.badges.each do |badge|
       h3 Badge: #{badge.name}
@@ -11,8 +11,11 @@
 h1 = @question.title
 h2 = @question.body
 
-.badge
-  - if @question.badge.present? && current_user&.author?(@question)
+.vote
+  = render partial: 'votes/vote', locals: { resource: @question }
+
+- if @question.badge.present? && current_user&.author?(@question)
+  .badg
     h3 Badge:
     p
       = @question.badge.name

@@ -1,43 +1,45 @@
-li class="answer-#{answer.id}"
-  p
-    = answer.body
+.answer data-answer-id="#{answer.id}"
+  .resource data-resource_type="answer" data-resource_id="#{answer.id}"
+    p
+      = answer.body
 
-    .vote
-      = render partial: 'votes/vote', locals: { resource: answer }
+      .answer-comments
+        = render partial: 'comments/list', locals: { resource: answer }
 
+      .vote
+        = render partial: 'votes/vote', locals: { resource: answer }
 
-    .links
-      = render partial: 'links/list', locals: { resource: answer }
+      .links
+        = render partial: 'links/list', locals: { resource: answer }
 
-    .files
-      = render partial: 'attachments/attachment', locals: { resource: answer }
+      .files
+        = render partial: 'attachments/attachment', locals: { resource: answer }
 
+    p
+      - if current_user&.author?(answer.question) && !answer.best?
+        = button_to 'Best answer', best_answer_path(answer),
+                                   method: :patch, remote: true
 
-    - if current_user&.author?(answer.question) && !answer.best?
-      = button_to 'Best answer', best_answer_path(answer),
-                                method: :patch, remote: true
-  br
-  - if current_user&.author?(answer)
-    '
-    = link_to 'Edit', '#', class: 'edit-answer-link',
-                      data: { answer_id: answer.id }
-    '  |
-    = link_to 'Delete', answer_path(answer),
-                        method: :delete,
-                        remote: true,
-                        data: { confirm: 'Are you sure?', answer_id: answer.id }
+    - if current_user&.author?(answer)
+      '
+      = link_to 'Edit', '#', class: 'edit-answer-link',
+                        data: { answer_id: answer.id }
+      '  |
+      = link_to 'Delete', answer_path(answer),
+                          method: :delete,
+                          remote: true,
+                          data: { confirm: 'Are you sure?', answer_id: answer.id }
 
-    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+      = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+        p
+          = f.label :body, 'Your Answer:'
+          = f.text_area :body, id: :answer_body
 
-      p
-        = f.label :body, 'Your Answer:'
-        = f.text_area :body, id: :answer_body
+        p
+          = f.label :files
+          = f.file_field :files, multiple: true, direct_upload: true
 
-      p
-        = f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true
+        = render partial: 'links/add', locals: { f: f }
 
-      = render partial: 'links/add', locals: { f: f }
-
-      br
-      = f.submit 'Save'
+        br
+        = f.submit 'Save'

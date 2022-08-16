@@ -1,9 +1,9 @@
-table
-  tr
-    th = 'Title'
-    th = 'Body'
+.questions  
+  table
+    tr
+      th = 'Question'
 
-    = render @questions
+      = render @questions
 
 - if user_signed_in?
   = link_to 'Ask', new_question_path

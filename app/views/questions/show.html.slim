@@ -1,7 +1,7 @@
-.question
-  = render 'section_question'
+.question data-question-id="#{@question.id}"
+  .resource data-resource_type="question" data-resource_id="#{@question.id}"
+    = render 'section_question'
 
-br
 .answers
   - if @question.answers.present?
     h3 Answers
@@ -17,10 +17,12 @@ br
   = form_with model: [@question, @answer], class: 'new-answer' do |f|
     p
       = f.label :body
+    p
       = f.text_area :body
 
     p
       = f.label :files
+    p
       = f.file_field :files, multiple: true 
 
     = render partial: 'links/add', locals: { f: f }

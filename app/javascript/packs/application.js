@@ -13,6 +13,8 @@ require("jquery")
 require("../answers")
 require("../questions")
 require("../votes")
+require("../comments")
+
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

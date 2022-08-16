@@ -68,4 +68,61 @@ feature 'User can create question', %q{
     visit new_question_path
     expect(page).to_not have_content 'Create'
   end
+
+  describe 'Multiple sessions', js: true do
+    scenario 'question appears on another user\'s page' do
+      Capybara.using_session('user') do
+        sign_in user
+        visit questions_path
+      end
+
+      Capybara.using_session('guest') do
+        visit questions_path
+      end
+
+      Capybara.using_session('user') do
+        visit new_question_path
+
+        within '.question-fields' do
+          fill_in 'Question title', with: 'SomeTitle'
+          fill_in 'Body', with: 'SomeBody'
+        end
+
+        click_on 'Create'
+
+        expect(page).to have_content 'Question successfully created'
+        expect(page).to have_content 'SomeTitle'
+        expect(page).to have_content 'SomeBody'
+      end
+
+      Capybara.using_session('guest') do
+        visit questions_path
+
+        expect(page).to have_content 'SomeTitle'
+      end
+    end
+
+    scenario 'question with errors not appears on another user\'s page' do
+      Capybara.using_session('user') do
+        sign_in user
+        visit new_question_path
+
+        within '.question-fields' do
+          fill_in 'Question title', with: 'SomeTitle'
+          fill_in 'Body', with: ''
+        end
+
+        click_on 'Create'
+
+        expect(page).to have_content "Body can't be blank"
+        expect(page).to_not have_content 'SomeTitle'
+      end
+
+      Capybara.using_session('guest') do
+        visit questions_path
+
+        expect(page).to_not have_content 'SomeTitle'
+      end
+    end
+  end
 end

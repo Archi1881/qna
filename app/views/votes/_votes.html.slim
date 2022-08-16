@@ -3,7 +3,7 @@ div class = "rate #{resource.class}-#{resource.id}"
     h3
       = "Rating: #{resource.rating}"
 
-  - unless current_user&.author?(resource)
+  - if user_signed_in? && !current_user&.author?(resource)
     .voting class = "#{'hidden' if current_user&.voted?(resource)}"
       = link_to 'Positive', polymorphic_path(resource, action: :positive),
                             method: :post, remote: true, data: { type: :json }

@@ -21,9 +21,7 @@ feature 'User can create answer', %q{
       click_on 'Add answer'
 
       expect(current_path).to eq question_path(question)
-      within '.answers' do
-        expect(page).to have_content 'Some Answer'
-      end
+      expect(page).to have_content 'Some Answer
     end
 
     scenario 'gives an answer with errors' do

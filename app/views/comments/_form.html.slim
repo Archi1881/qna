@@ -1,0 +1,13 @@
+= form_with model: [resource, @comment], class: 'comment-form hidden',
+            id: "comment-#{resource.class.to_s.downcase}-#{resource.id}" do |f|
+
+  .comment-errors
+    = render 'shared/errors', resource: @comment
+
+  p
+    = f.label :content, 'Your comment'
+  p
+    = f.text_area :content
+
+  p
+    = f.submit 'Post'

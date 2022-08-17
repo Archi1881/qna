@@ -4,10 +4,12 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :load_question, only: %i[new create]
   before_action :find_answer, only: %i[update destroy best]
+  after_action :publish_answer, only: %i[create]
 
   def create
     @answer = @question.answers.build(answer_params.merge(question: @question))
     @answer.user = current_user
+    @comment = Comment.new
 
     if @answer.save
       flash.now[:notice] = 'Answer successfully added'
@@ -54,5 +56,26 @@ class AnswersController < ApplicationController
   def answer_params
     params.require(:answer).permit(:body, files: [],
                                    links_attributes: [:id, :name, :url, :_destroy]))
+  end
+  def answer_files
+    @answer.files.map do |file|
+          {
+            id: file,
+            name: file.filename.to_s,
+            url: url_for(file) 
+          }
+    end
+  end
+
+  def publish_answer
+    return if @answer.errors.present?
+
+    ActionCable.server.broadcast(
+      "question-#{@question.id}-answers",
+        answer: @answer,
+        question_author: @answer.question.user,
+        files: answer_files,
+        links: @answer.links
+        )
   end
 end

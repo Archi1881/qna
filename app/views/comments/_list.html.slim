@@ -1,0 +1,14 @@
+- if user_signed_in?
+  = link_to 'Add comment', '#',
+            class: 'new-comment-link',
+            data: { klass: resource.class.to_s.downcase,
+                    id: resource.id }
+
+  = render partial: 'comments/form', locals: { resource: resource }
+
+- if resource.comments.present?
+  .comments
+    h3 Comments:
+    = render resource.comments
+- else
+  p No comments yet

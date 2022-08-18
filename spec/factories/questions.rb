@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :question do
-    title { "MyString" }
-    body { "MyText" }
+    title { 'MyString' }
+    body { 'MyText' }
 
     trait :invalid do
       title { nil }
@@ -12,7 +12,7 @@ FactoryBot.define do
         "#{n} Some Title"
       end
 
-      sequence(:body) do |n| 
+      sequence(:body) do |n|
         "#{n} Some Body"
       end
     end

@@ -17,7 +17,7 @@ RSpec.describe AttachmentsController, type: :controller do
 
       it 'reder template destroy' do
         login author
-        
+
         delete :destroy, params: { id: answer.files.first, question_id: question }, format: :js
 
         expect(response).to render_template :destroy

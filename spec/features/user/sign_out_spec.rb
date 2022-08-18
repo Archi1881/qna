@@ -1,10 +1,9 @@
 require 'rails_helper'
 
-feature 'User can sign out', %q{
+feature 'User can sign out', '
   As an authenticated User
   Id like to be able to sign out
-} do
-
+' do
   given(:user) { create :user }
 
   scenario 'User sign out' do

@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
-
-    before_action :gon_user, unless: :devise_controller?
+  before_action :gon_user, unless: :devise_controller?
 
   private
 

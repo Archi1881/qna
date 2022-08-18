@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:author) { create (:user) }
-  let(:user) { create (:user) }
+  let(:author) { create(:user) }
+  let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
   let(:second_question) { create :question, user: user }
   let(:answer) { create(:answer, question: question) }
@@ -30,7 +30,9 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save the answer' do
-        expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js }
+        expect do
+          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js
+        end
           .to_not change(Answer, :count)
       end
 
@@ -48,7 +50,9 @@ RSpec.describe AnswersController, type: :controller do
       let!(:answer) { create :answer, question: question, user: author }
 
       it 'delete the answer' do
-        expect { delete :destroy, params: { id: answer, question_id: question }, format: :js }.to change(Answer, :count).by(-1)
+        expect do
+          delete :destroy, params: { id: answer, question_id: question }, format: :js
+        end.to change(Answer, :count).by(-1)
       end
 
       it 'redirects to question' do
@@ -61,7 +65,9 @@ RSpec.describe AnswersController, type: :controller do
       let!(:answer) { create :answer, question: question, user: user }
 
       it 'try delete the answer' do
-        expect { delete :destroy, params: { id: answer, question_id: question }, format: :js }.to_not change(Answer, :count)
+        expect do
+          delete :destroy, params: { id: answer, question_id: question }, format: :js
+        end.to_not change(Answer, :count)
       end
 
       it 're-renders questions/show' do
@@ -73,7 +79,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     before { login author }
-    
+
     context 'with valid attributes' do
       it 'changes answer attributes' do
         patch :update, params: { id: answer, answer: { body: 'New body' } }, format: :js

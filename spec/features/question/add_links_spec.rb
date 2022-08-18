@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'User can add links to question', %q{
+feature 'User can add links to question', "
   In order to provide additional info to my question
   As an question's author
   I'd like to be abble to add links
-} do
-
+" do
   given(:user) { create :user }
   given(:gist_link) { 'https://gist.github.com/Archi1881/3257223adf647af2937cd9eadafbfe56' }
 

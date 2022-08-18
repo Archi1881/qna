@@ -1,20 +1,19 @@
 require 'rails_helper'
 
-feature 'User can post a comment', %q{
+feature 'User can post a comment', "
   As an any user
   I'd like to be able to post comment's
   For the answer
-} do
-
+" do
   given(:author) { create :user }
   given(:user) { create :user }
   given!(:question) { create :question, user: author }
   given!(:answer) { create :answer, question: question, user: author }
-  
+
   describe 'Authenticated user', js: true do
     background do
       sign_in user
-      
+
       visit question_path(question)
     end
 

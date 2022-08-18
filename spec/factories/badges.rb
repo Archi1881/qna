@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :badge do
-    name { "MyString" }
+    name { 'MyString' }
     question { nil }
-    user { nil }    
+    user { nil }
   end
 end

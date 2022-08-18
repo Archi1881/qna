@@ -9,7 +9,6 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.build(answer_params.merge(question: @question))
     @answer.user = current_user
-    @comment = Comment.new
 
     if @answer.save
       flash.now[:notice] = 'Answer successfully added'
@@ -77,5 +76,9 @@ class AnswersController < ApplicationController
         files: answer_files,
         links: @answer.links
         )
+  end
+
+  def init_new_comment
+    @comment = Comment.new
   end
 end

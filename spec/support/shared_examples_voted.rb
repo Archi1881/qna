@@ -1,6 +1,6 @@
 RSpec.shared_examples 'voted' do
   let(:author) { create :user }
-  let(:user) { create :user }  
+  let(:user) { create :user }
   let!(:model) { create(described_class.controller_name.classify.downcase.to_sym, user: author) }
 
   describe 'POST #positive' do

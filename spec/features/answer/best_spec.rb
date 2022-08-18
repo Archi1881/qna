@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'Set a best answers', %q{
+feature 'Set a best answers', '
   Author of question
   Set one of answers
   As the best answer
-} do
-
+' do
   given(:author) { create :user }
   given(:user) { create :user }
   given(:question) { create :question, user: author }
@@ -61,7 +60,7 @@ feature 'Set a best answers', %q{
     end
   end
 
-  describe 'Unauthenticated user', js: true  do
+  describe 'Unauthenticated user', js: true do
     scenario 'tries to set the best answer' do
       visit question_path(question)
 

@@ -36,7 +36,7 @@ RSpec.shared_examples 'voteable' do
     before { voteable.negative(users.first) }
 
     it 'changed score' do
-      expect(Vote.last.score).to eq -1
+      expect(Vote.last.score).to eq(-1)
     end
 
     it 'vote user is a voter' do

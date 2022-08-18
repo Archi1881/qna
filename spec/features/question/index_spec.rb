@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'User can see list of questions' do
-
   given(:user) { create :user }
   given!(:questions) { create_list :s_questions, 3, user: user }
 

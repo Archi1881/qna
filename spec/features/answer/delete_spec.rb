@@ -1,15 +1,13 @@
 require 'rails_helper'
 
-feature 'Delete his answer', %q{
+feature 'Delete his answer', '
   must be log in
   must be an author of answer
-} do
-
+' do
   given(:author) { create :user }
   given(:user) { create :user }
   given!(:question) { create :question, user: author }
   given!(:answer) { create :answer, question: question, user: author }
-
 
   scenario 'Authenticated Author tries to delete his answer', js: true do
     sign_in author
@@ -23,7 +21,7 @@ feature 'Delete his answer', %q{
 
     page.driver.browser.switch_to.alert.accept
 
-    expect(page).to have_content 'Answer successfully deleted'  
+    expect(page).to have_content 'Answer successfully deleted'
   end
 
   scenario "Authenticated User tries to delete another's answer", js: true do

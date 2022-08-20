@@ -39,10 +39,10 @@ module Voted
 
   def render_json(*flash)
     render json: {
-                   score: @voteable.rating,
-                   klass: @voteable.class.to_s,
-                   id: @voteable.id,
-                   flash: flash
-                 }
+      score: @voteable.rating,
+      klass: @voteable.class.to_s,
+      id: @voteable.id,
+      flash: flash
+    }
   end
 end

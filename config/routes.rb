@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users
-  root to: "questions#index"
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'oauth_callbacks',
+    confirmations: 'email_confirmations'
+  }
 
   resources :attachments, only: %i[destroy]
   resources :links, only: %i[destroy]

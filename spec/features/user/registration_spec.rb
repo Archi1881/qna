@@ -1,10 +1,9 @@
 require 'rails_helper'
 
-feature 'User can register', %q{
- As a new user 
+feature 'User can register', '
+ As a new user
  I want to register
-} do
-
+' do
   background { visit new_user_registration_path }
 
   scenario 'New registration' do
@@ -13,7 +12,7 @@ feature 'User can register', %q{
     fill_in 'Password confirmation', with: 'testpass'
     click_on 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    expect(page).to have_content 'A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.'
   end
 
   scenario 'New registration with blank Email' do
@@ -22,7 +21,7 @@ feature 'User can register', %q{
     click_on 'Sign up'
 
     expect(page).to have_content "Email can't be blank"
-  end 
+  end
 
   scenario 'New registration with blank Password' do
     fill_in 'Email', with: 'test@user.com'

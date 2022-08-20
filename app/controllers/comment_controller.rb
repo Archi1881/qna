@@ -7,10 +7,7 @@ class CommentsController < ApplicationController
     @comment = @resource.comments.new(comment_params)
     @comment.user = current_user
 
-    if @comment.save
-
-      flash.now[:notice] = 'Comment posted successfully'
-    end
+    flash.now[:notice] = 'Comment posted successfully' if @comment.save
   end
 
   private
@@ -31,7 +28,7 @@ class CommentsController < ApplicationController
   end
 
   def json_data
-    { 
+    {
       comment: @comment,
       resource: @resource.class.name.downcase,
       resource_id: @comment.commentable_id,

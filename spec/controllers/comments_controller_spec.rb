@@ -24,7 +24,9 @@ RSpec.describe CommentsController, type: :controller do
 
       context 'with invalid attributes' do
         it 'does not save a comment to the database' do
-          expect { post :create, params: { question_id: question, comment: attributes_for(:comment, :invalid) }, format: :js }
+          expect do
+            post :create, params: { question_id: question, comment: attributes_for(:comment, :invalid) }, format: :js
+          end
             .to_not change(question.comments, :count)
         end
       end
@@ -37,7 +39,7 @@ RSpec.describe CommentsController, type: :controller do
       end
 
       it 'gets an invalid response' do
-        post :create, params: { question_id: question, comment: attributes_for(:comment) }, format: :js 
+        post :create, params: { question_id: question, comment: attributes_for(:comment) }, format: :js
 
         expect(response.status).to eq 401
       end

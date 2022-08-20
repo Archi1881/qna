@@ -1,10 +1,10 @@
 .questions  
-  table
+  table.table
     tr
-      th = 'Question'
+      th = 'Question Title'
 
       = render @questions
 
-- if user_signed_in?
-  = link_to 'Ask', new_question_path
+  - if user_signed_in?
+    = link_to 'Ask', new_question_path
   

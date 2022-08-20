@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.shared_examples "linkable" do
+RSpec.shared_examples 'linkable' do
   describe 'associations' do
     it { should have_many(:links).dependent(:destroy) }
   end

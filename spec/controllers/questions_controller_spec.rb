@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   it_behaves_like 'voted'
-  
+
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
 
@@ -22,7 +22,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #new' do
     before { login(user) }
-    
+
     before { get :new }
 
     it 'assings a new Link' do
@@ -56,9 +56,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
+        expect do
+          post :create, params: { question: attributes_for(:question, :invalid) }
+        end.to_not change(Question, :count)
       end
-
 
       it 're-renders new view' do
         post :create, params: { question: attributes_for(:question, :invalid) }
@@ -70,7 +71,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'DELETE #destroy' do
     before { login(user) }
 
-    context 'Author can deletes his question' do    
+    context 'Author can deletes his question' do
       let!(:question) { create(:question, user: user) }
 
       it 'deletes the question' do

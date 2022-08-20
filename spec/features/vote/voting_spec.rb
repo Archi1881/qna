@@ -1,10 +1,9 @@
 require 'rails_helper'
 
-feature 'User can vote', %q{
+feature 'User can vote', '
   As an Authenticated user
   Id like to be able to vote
-} do
-
+' do
   given(:author) { create :user }
   given(:user) { create :user }
   given!(:question) { create :question, user: author }

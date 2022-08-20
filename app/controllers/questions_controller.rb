@@ -1,11 +1,12 @@
 class QuestionsController < ApplicationController
   include Voted
-  
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show, :update, :destroy]
+
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :load_question, only: %i[show update destroy]
+  before_action :init_new_comment, only: %i[show update]
 
   after_action :publish_question, only: %i[create]
-  
+
   def index
     @questions = Question.all
   end
@@ -13,7 +14,6 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     @answer.links.build
-    @comment = Comment.new
   end
 
   def new
@@ -22,8 +22,7 @@ class QuestionsController < ApplicationController
     @question.build_badge
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @question = Question.new(question_params)
@@ -61,8 +60,8 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, file: [],
-                                    links_attributes: [:id, :name, :url, :_destroy],
-                                    badge_attributes: [:name, :image])
+                                                    links_attributes: %i[id name url _destroy],
+                                                    badge_attributes: %i[name image])
   end
 
   def publish_question
@@ -71,9 +70,13 @@ class QuestionsController < ApplicationController
     ActionCable.server.broadcast(
       'question_channel',
       ApplicationController.render(
-        partial: 'questions/question', 
+        partial: 'questions/question',
         locals: { question: @question }
-        )
       )
+    )
+  end
+
+  def init_new_comment
+    @comment = Comment.new
   end
 end

@@ -1,10 +1,9 @@
 require 'rails_helper'
 
-feature 'User can delete his question', %q{
+feature 'User can delete his question', '
   must be log in
   must be an author of question
-} do
-
+' do
   given(:author) { create :user }
   given(:question) { create :question, user: author }
   given(:user) { create :user }

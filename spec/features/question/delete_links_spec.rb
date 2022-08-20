@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'User can remove links from question', %q{
+feature 'User can remove links from question', "
   In order to provide additional info to my question
   As an question's author
   I'd like to be abble to remove links
-} do
-
+" do
   given(:author) { create :user }
   given(:user) { create :user }
   given!(:question) { create :question, user: author }
@@ -27,15 +26,15 @@ feature 'User can remove links from question', %q{
     sign_in user
     visit question_path(question)
 
-    within '.links' do    
+    within '.links' do
       expect(page).to_not have_link 'x'
-    end  
+    end
   end
 
   scenario 'Unauthenticated user can not to removes the link' do
     visit question_path(question)
 
-    within '.links' do    
+    within '.links' do
       expect(page).to_not have_link 'x'
     end
   end

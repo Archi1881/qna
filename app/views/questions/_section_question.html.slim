@@ -34,7 +34,7 @@ p Author: #{@question.user.email}
   p
     = render partial: 'attachments/attachment', locals: { resource: @question }
 
-- if current_user&.author?(@question)
+- if can?(:destroy, @question)
 
   .edit-question
     = link_to 'Edit', '#', class: 'edit-question-link',

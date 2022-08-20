@@ -1,33 +1,35 @@
-.question data-question-id="#{@question.id}"
-  .resource data-resource_type="question" data-resource_id="#{@question.id}"
+.container.col-md-12  
+  .question.resource data-question-id=@question.id data-resource_type="question"
     = render 'section_question'
 
-.answers
-  - if @question.answers.present?
-    h3 Answers
-    = render @question.answers
+  .answers
+    - if @question.answers.present?
+      h3 Answers
+      = render @question.answers
 
+  br
+  - if user_signed_in? && can?(:create, Answer)
+    h3 Add Answer
+
+    .answer-errors
+      = render 'shared/errors', resource: @answer
+
+    = form_with model: [@question, @answer], class: 'new-answer' do |f|
+      p
+        = f.label :body
+      p
+        = f.text_area :body
+
+      p
+        = f.label :files
+      p
+        = f.file_field :files, multiple: true 
+
+      = render partial: 'links/add', locals: { f: f }
+
+      p
+        = f.submit 'Add answer'
+    hr
+      
+  = link_to 'Back', questions_path
 br
-- if user_signed_in?
-  = 'Add Answer'
-
-  .answer-errors
-    = render 'shared/errors', resource: @answer
-
-  = form_with model: [@question, @answer], class: 'new-answer' do |f|
-    p
-      = f.label :body
-    p
-      = f.text_area :body
-
-    p
-      = f.label :files
-    p
-      = f.file_field :files, multiple: true 
-
-    = render partial: 'links/add', locals: { f: f }
-
-    p
-    = f.submit 'Add answer'
-
-= link_to 'Back', questions_path

@@ -6,6 +6,8 @@ class AnswersController < ApplicationController
   before_action :find_answer, only: %i[update destroy best]
   after_action :publish_answer, only: %i[create]
 
+  authorize_resource
+
   def create
     @answer = @question.answers.build(answer_params.merge(question: @question))
     @answer.user = current_user
@@ -78,7 +80,7 @@ class AnswersController < ApplicationController
         )
   end
 
-  def init_new_comment
-    @comment = Comment.new
-  end
+  #def init_new_comment
+    #@comment = Comment.new
+  #end
 end

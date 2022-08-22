@@ -5,7 +5,7 @@
       li class="link-#{link.id}"
         = link_to link.name, link.url, target: :blank
         '
-        - if current_user&.author?(resource) 
+        - if can?(:manage, link) 
           = link_to 'x', link_path(link),
                          method: :delete,
                          remote: true

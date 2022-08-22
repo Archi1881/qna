@@ -72,6 +72,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0'
   gem 'factory_bot_rails'
   gem 'devise'
+  gem 'cancancan'
 end
 
 group :development do

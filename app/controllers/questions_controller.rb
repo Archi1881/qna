@@ -3,9 +3,10 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show update destroy]
-  before_action :init_new_comment, only: %i[show update]
-
+  
   after_action :publish_question, only: %i[create]
+
+  authorize_resource
 
   def index
     @questions = Question.all
@@ -13,6 +14,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @comment = Comment.new
     @answer.links.build
   end
 
@@ -36,6 +38,8 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    @comment = Comment.new
+
     if current_user.author?(@question)
       @question.update(question_params)
       flash.now[:notice] = 'Question successfully edited'
@@ -74,9 +78,5 @@ class QuestionsController < ApplicationController
         locals: { question: @question }
       )
     )
-  end
-
-  def init_new_comment
-    @comment = Comment.new
   end
 end

@@ -3,24 +3,26 @@
     p
       = answer.body
 
-      .answer-comments
-        = render partial: 'comments/list', locals: { resource: answer }
+    p Author: #{answer.user.email}  
 
-      .vote
-        = render partial: 'votes/vote', locals: { resource: answer }
+    .answer-comments
+      = render partial: 'comments/list', locals: { resource: answer }
 
-      .links
-        = render partial: 'links/list', locals: { resource: answer }
+    .vote
+      = render partial: 'votes/vote', locals: { resource: answer }
 
-      .files
-        = render partial: 'attachments/attachment', locals: { resource: answer }
+    .links
+      = render partial: 'links/list', locals: { resource: answer }
+
+    .files
+      = render partial: 'attachments/attachment', locals: { resource: answer }
 
     p
-      - if current_user&.author?(answer.question) && !answer.best?
+      - if can?(:best, answer) && !answer.best?
         = button_to 'Best answer', best_answer_path(answer),
                                    method: :patch, remote: true
 
-    - if current_user&.author?(answer)
+    - if  can?(:update, answer)
       '
       = link_to 'Edit', '#', class: 'edit-answer-link',
                         data: { answer_id: answer.id }

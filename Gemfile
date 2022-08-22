@@ -73,6 +73,9 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'devise'
   gem 'cancancan'
+  gem 'doorkeeper'
+  gem 'active_model_serializers'
+  gem 'oj'
 end
 
 group :development do

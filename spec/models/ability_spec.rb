@@ -40,6 +40,5 @@ describe Ability do
     it { should_not be_able_to :update, other_answer, user: user }
 
     it { should be_able_to :best, answer, user: user }
-
   end
 end

@@ -12,6 +12,9 @@ h1 = @question.title
 p = @question.body
 p Author: #{@question.user.email}
 
+- if user_signed_in?
+  = render partial: 'subscriptions/subscription', locals: { resource: @question }
+
 .question-comments
   = render partial: 'comments/list', locals: { resource: @question }
 

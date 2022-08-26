@@ -10,7 +10,8 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
   validates :best, inclusion: [true, false]
-  # validates_uniqueness_of :best, { scope: :question_id }, if: :best?
+  
+  after_create_commit :notify_subscribers 
 
   def set_best!
     transaction do
@@ -19,5 +20,11 @@ class Answer < ApplicationRecord
 
       question.badge&.update!(user: user)
     end
+  end
+
+  private
+
+  def notify_subscribers
+    NewAnswerDigestJob.perform_later(self)
   end
 end

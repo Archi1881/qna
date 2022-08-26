@@ -32,39 +32,67 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'User is an author' do
-    it 'of the question' do
-      expect(author).to be_author(question)
+  describe 'subscriptions' do
+    let(:other_user) { create :user }
+    let!(:subscription) { create :subscription, user: user, question: question }
+
+    context '#subscribed_of?' do
+      it 'subscribed to the question' do
+        expect(user).to be_subscribed_of(question)
+      end
+
+      it 'unsubscribed of the question' do
+        expect(other_user).to_not be_subscribed_of(question)
+      end
     end
 
-    it 'of the answer' do
-      expect(author).to be_author(answer)
-    end
-  end
+    context '#subscribe!' do
+      it 'calls Subscription#create!' do
+        expect { Question.create(attributes_for(:question).merge(user: user)) }
+          .to change(user.subscriptions, :count).by(1)
+      end
 
-  describe 'User is not an author' do
-    it 'of the question' do
-      expect(user).to_not be_author(question)
-    end
-
-    it 'of the answer' do
-      expect(user).to_not be_author(answer)
-    end
-  end
-
-  describe 'User positive voted' do
-    before { question.positive(user) }
-
-    it 'for the question' do
-      expect(user).to be_voted(question)
+    icontext '#unsubscribe!' do
+    it 'calls Subscription#destroy!' do
+      expect { question.destroy }.to change(user.subscriptions, :count).by(-1)
     end
   end
 
-  describe 'User negative voted' do
-    before { question.negative(user) }
+  describe '#author?' do
+    context 'user is an author' do
+      it 'of the question' do
+        expect(author).to be_author(question)
+      end
 
-    it 'for the question' do
-      expect(user).to be_voted(question)
+      it 'of the answer' do
+        expect(author).to be_author(answer)
+      end
+
+      context 'user is not an author' do
+        it 'of the question' do
+          expect(user).to_not be_author(question)
+        end
+  
+        it 'of the answer' do
+          expect(user).to_not be_author(answer)
+        end
+  end
+
+  describe '#vote?' do
+    context 'user positive voted' do
+      before { question.positive(user) }
+
+      it 'for the question' do
+        expect(user).to be_voted(question)
+    end
+  end
+
+    context 'user negative voted' do
+      before { question.negative(user) }
+
+      it 'for the question' do
+        expect(user).to be_voted(question)
+      end
     end
   end
 end

@@ -68,7 +68,7 @@ describe 'Questions API', type: :request do
       let(:question_response) { json['question'] }
 
       let(:question_request) {
-        post api_path, params: { 
+        post api_path, params: {
           access_token: access_token.token,
           question: question
         }, headers: headers 

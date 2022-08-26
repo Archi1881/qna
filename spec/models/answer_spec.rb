@@ -37,4 +37,15 @@ RSpec.describe Answer, type: :model do
       expect(question.answers).to eq([best_answer, answer])
     end
   end
+  
+  describe '#notify_subscribers' do
+    let(:user) { create :user }
+    let(:question) { create :question }
+
+    it 'calls NewAnswerDigestJob' do
+      expect(NewAnswerDigestJob).to receive(:perform_later).and_call_original
+
+      Answer.create(attributes_for(:answer).merge(question: question, user: user))
+    end
+  end
 end

@@ -26,15 +26,14 @@ end
 shared_examples_for 'Public fields returnable' do
   it 'returns all public fields' do
     request
-    fields.each do |attr|
-      expect(resource_response[attr]).to eq resource.send(attr).as_json
+    fields.each do |field|
+      expect(resource_response[field]).to eq resource.send(field).as_json
     end
   end
 end
 
 shared_examples_for 'Private fields not returnable' do
   it 'dosn\'t return private fields' do
-    fields.each do |attr|
-      expect(resource_response).to_not have_key(attr)
+    fields.each { |field| expect(resource_response).to_not have_key(field) }
     end
   end

@@ -11,6 +11,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.build(answer_params.merge(question: @question))
     @answer.user = current_user
+    @comment = Comment.new
 
     if @answer.save
       flash.now[:notice] = 'Answer successfully added'
@@ -19,6 +20,7 @@ class AnswersController < ApplicationController
 
   def update
     @question = @answer.question
+    @comment = Comment.new
 
     if current_user.author?(@answer)
       @answer.update(answer_params)
@@ -37,6 +39,7 @@ class AnswersController < ApplicationController
   end
 
   def best
+    @comment = Comment.new
     if current_user.author?(@answer.question)
       @answer.set_best!
 
@@ -79,8 +82,4 @@ class AnswersController < ApplicationController
         links: @answer.links
         )
   end
-
-  #def init_new_comment
-    #@comment = Comment.new
-  #end
 end

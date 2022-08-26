@@ -4,7 +4,7 @@ class Question < ApplicationRecord
   include Commentable
 
   belongs_to :user
-  has_many :answers, -> { order best: :desc, created_at: :desc }, dependent: :destroy
+  has_many :answers, -> { order best: :desc, created_at: :asc }, dependent: :destroy
   has_one :badge, dependent: :destroy
 
   accepts_nested_attributes_for :badge, allow_destroy: true,

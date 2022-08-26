@@ -4,6 +4,7 @@ html
     meta charset='utf-8'
     meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'
 
+
     title qna
     = csrf_meta_tags
     = csp_meta_tag
@@ -14,17 +15,17 @@ html
     = javascript_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    = render 'shared/navigation'
+
+  = render 'shared/navigation'
 
   .container.col-xl-10
-
     .flash
       .row.justify-content-center.mt-2
-      - if flash.present?
-        .alert.alert-primary.alert-dismissible.fade.show role="alert"
-          = render 'shared/flash'
-          button type="button" class="close" data-dismiss="alert" aria-label="Close"
-            span aria-hidden="true" &times;
+        - if flash.present?
+          .alert.alert-primary.alert-dismissible.fade.show role="alert"
+            = render 'shared/flash'
+            button type="button" class="close" data-dismiss="alert" aria-label="Close"
+              span aria-hidden="true" &times;
 
   .container.col-md-10
     = yield

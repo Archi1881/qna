@@ -81,7 +81,7 @@ describe 'Answers API', type: :request do
       end
 
       it 'returns files' do
-        expect(answer_response['files'].first.size).to eq 1 
+        expect(answer_response['files'].first.size).to eq 1
       end
     end
   end

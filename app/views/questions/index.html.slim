@@ -1,11 +1,12 @@
 .questions  
-  table.table
-    tr
-      th = 'Question Title'
+  span.border.border-light.card
+    table.table.table-striped
+      tr
+        th = 'Question Title'
 
-      = render @questions
+        = render @questions
 
-  - if user_signed_in? && can?(:create, Question)
-    .container
-      = link_to 'Ask', new_question_path
+      - if user_signed_in? && can?(:create, Question)
+        .container
+          = link_to 'Ask', new_question_path
   

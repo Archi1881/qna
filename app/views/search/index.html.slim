@@ -1,0 +1,8 @@
+span.border.border-light.card
+  .card
+    .card-header
+      h4 = "Results: #{@results.count}"
+    .card-body
+      p
+        - @results.each do |result|
+          = render result.class.to_s.downcase, result: result

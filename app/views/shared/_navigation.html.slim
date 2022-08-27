@@ -9,6 +9,9 @@
           '  |
           = link_to 'Sidekiq', sidekiq_web_path
 
+      .search
+        = render 'shared/search'    
+
       .navbar-text
         - if user_signed_in?
           = current_user.email

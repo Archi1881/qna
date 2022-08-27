@@ -11,7 +11,7 @@ class Answer < ApplicationRecord
   validates :body, presence: true
   validates :best, inclusion: [true, false]
   
-  after_create_commit :notify_subscribers 
+  after_create_commit :notify_subscribers
 
   def set_best!
     transaction do

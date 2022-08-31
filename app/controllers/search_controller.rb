@@ -1,15 +1,13 @@
 class SearchController < ApplicationController
+  skip_before_action :authenticate_user!
+  authorize_resource
+
   def index
-    @results = SearchService.call(params[:query], params[:resource])
-
-  rescue StandardError => e
-    redirect_to root_path
-    flash[:alert] = e.message
-  end
-
-  private
-
-  def query_params
-    params.permit(:query, :resource)
+    if params[:query].present?
+      @results = Search.filter(params[:query], resource: params[:resource])
+    else
+      @results = []
+    end
+    respond_with @results
   end
 end

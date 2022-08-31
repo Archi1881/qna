@@ -1,0 +1,8 @@
+.search-form  
+  = form_tag search_path, method: :get, class: 'form-inline' do
+
+    = text_field_tag :query, params[:query], class: "form-control", placeholder: 'Search'
+
+    = select_tag :resource, options_for_select(SearchService::RESOURCES, params[:resource]), class: "custom-select mr-sm-6"
+
+    = submit_tag 'Find', class: "btn btn-light"

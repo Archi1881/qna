@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionsController, type: :controller do
-  let(:author) { create :user }  
+  let(:author) { create :user } 
   let(:user) { create :user }
   let(:question) { create :question, user: author }
 

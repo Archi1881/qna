@@ -78,6 +78,9 @@ group :development, :test do
   gem 'sidekiq'
   gem 'sinatra', require: false
   gem 'whenever', require: false
+  gem 'mysql2',          '~> 0.4',    :platform => :ruby
+  gem 'jdbc-mysql',      '~> 5.1.35', :platform => :jruby
+  gem 'thinking-sphinx', '~> 5.4'
 end
 
 group :development do
@@ -100,4 +103,6 @@ group :test do
   gem "rails-controller-testing"
   gem 'launchy'
   gem 'sass-rails'
+  gem 'database_cleaner-active_record'
+  gem 'database_cleaner-redis'
 end

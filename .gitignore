@@ -32,3 +32,5 @@
 /config/database.yml
 .idea
 /config/credentials/development.key
+/db/sphinx
+/config/*.sphinx.conf

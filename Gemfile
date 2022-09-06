@@ -59,7 +59,6 @@ gem 'cleanup'
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 gem 'slim-rails'
-
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -98,6 +97,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-passenger', require: false
+  gem 'capistrano-sidekiq', require: false
 end
 
 group :test do

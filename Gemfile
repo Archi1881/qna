@@ -81,6 +81,7 @@ group :development, :test do
   gem 'mysql2',          '~> 0.4',    :platform => :ruby
   gem 'jdbc-mysql',      '~> 5.1.35', :platform => :jruby
   gem 'thinking-sphinx', '~> 5.4'
+  
 end
 
 group :development do
@@ -92,6 +93,11 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-passenger', require: false
 end
 
 group :test do
